@@ -1,34 +1,36 @@
 #include <stdlib.h>
+#include <time.h>
 #include <stdio.h>
 
 /**
- * main - in this code you can view the combination of the first 900 numbers
+ * main - Entry point
  *
- * Return: Always 0 (Sucess)
+ * Return: Always 0 (Success)
  */
 int main(void)
 {
-	int c;
-	int d = 49;
-	int u = 50;
-
-	for (c = 48; c <= 55; ++c)
-	{
-		for (d = c + 1; d <= 56; ++d)
-		{
-			for (u = 50; u <= 57; ++u)
-			{
-				putchar(c);
-				putchar(d);
-				putchar(u);
-				if (c != 55 || d != 56 || u != 57)
-				{
-					putchar(44);
-					putchar(32);
-				}
-			}
-		}
-	}
-	putchar('\n');
-	return (0);
+int c = 0;
+int f_d;
+int m_d;
+int l_d;
+while (c <= 999)
+{
+f_d = (c / 100 + '0');
+m_d = (c / 10 % 10 + '0');
+l_d = (c % 10 + '0');
+if ((f_d < m_d)&&(m_d < l_d))
+{
+putchar(f_d);
+putchar(m_d);
+putchar(l_d);
+if (c < 789)
+{
+putchar(',');
+putchar(' ');
+}
+}
+c++;
+}
+putchar('\n');
+return (0);
 }
