@@ -1,24 +1,10 @@
-#include "holberton.h"
+#include <holberton.h>
 /**
- * _isupper - Checked if a character is a upper character
- * @c: Value in ascii to be cheke
- * Return: (1) if c is upper (0) otherwise
+ * _isupper - check the code for ALX School students.
+ * @c : character to check the case
+ * Return: Always 0 or 1
  */
-
 int _isupper(int c)
 {
-	int upper, i;
-
-	i = 65;
-	while (i <= 90)
-	{
-		if (c == i)
-		{
-			upper = 1;
-			break;
-		}
-		upper = 0;
-		i++;
-	}
-	return (upper);
+return (c >= 65 && c <= 90);
 }
