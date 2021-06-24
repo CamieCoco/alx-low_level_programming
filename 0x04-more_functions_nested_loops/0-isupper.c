@@ -1,10 +1,15 @@
-#include <holberton.h>
+#include "holberton.h"
 /**
- * _isupper - check the code for ALX School students.
- * @c : character to check the case
- * Return: Always 0 or 1
+ * _isupper - function that checks for uppercase character.
+ * @c: the int for the paramaters of my function
+ * Return: 0
  */
 int _isupper(int c)
 {
-return (c >= 65 && c <= 90);
+	if (c >= 65 && c <= 90)
+	{
+	return (1);
+	}
+	else
+	return (0);
 }
