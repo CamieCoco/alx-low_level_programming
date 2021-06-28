@@ -1,15 +1,19 @@
 #include "holberton.h"
 
 /**
- * _puts - prin a string
- * @str: pointer used to print the string
+ * print_rev - display a reverse string
+ * @s: used to print the string
  */
-void _puts(char *str)
+void print_rev(char *s)
 {
-	while (*str)
+	int a;
+
+	a = _strlen(s);
+	a--;
+	while (a >= 0)
 	{
-		_putchar(*str);
-		str++;
+		_putchar(s[a]);
+		a--;
 	}
 	_putchar('\n');
 }
