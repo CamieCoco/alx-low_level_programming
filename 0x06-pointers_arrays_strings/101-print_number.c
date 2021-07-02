@@ -1,23 +1,32 @@
 #include <stdio.h>
+#include "holberton.h"
 
-int main(void)
+/**
+ * print_number - prints an integer
+ *
+ * @n: int to print
+ * Return: void
+ */
+void print_number(int n)
 {
-  int n;
-  int a[5];
-  int *p;
+	unsigned int num;
+	unsigned int div = 1;
 
-  a[2] = 1024;
-  p = &n;
-  /*
-   * write your line of code here...
-   * Remember:
-   * - you are not allowed to use a
-   * - you are not allowed to modify p
-   * - only one statement
-   * - you are not allowed to code anything else than this line of code
-   */
-  *(p + 5) = 98;
-  /* ...so that this prints 98\n */
-  printf("a[2] = %d\n", a[2]);
-  return (0);
+	if (n < 0)
+	{
+		_putchar('-');
+		num = -1 * n;
+	}
+	else
+	{
+		num = n;
+	}
+	while (num / div > 9)
+		div *= 10;
+	while (div > 9)
+	{
+		_putchar((num / div) % 10 + '0');
+		div = div / 10;
+	}
+	_putchar(num % 10 + '0');
 }
