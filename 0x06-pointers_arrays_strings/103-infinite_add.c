@@ -1,43 +1,101 @@
+#include <stdio.h>
 #include "holberton.h"
 
+int addi(char *n2, char *r, int, int, int, int);
+
 /**
- * print_buffer - function that print a buffer
- * @b: pointer
- * @size: bytes of the buffer pointe by b
+ * *infinite_add - adds two numbers in a buffer sized to size_r
+ * only positive numbers or 0 and only digits in the string. The
+ * strings must not be empty and if it cannot be stored in r, it
+ * will return 0 instead of the sum
+ *
+ * @n1: first number string
+ * @n2: second number string
+ * @r: buffer to store sum
+ * @size_r: size of the buffer r
+ * Return: char pointer for result
  */
-void print_buffer(char *b, int size)
+char *infinite_add(char *n1, char *n2, char *r, int size_r)
 {
-	int byte = 0, i;
+	int n1_len, n2_len;
+	int i, max, flag;
 
-	for (byte = 0; byte < size; byte += 10)
+	for (n1_len = 0; *(n1 + n1_len); n1_len++)
+		;
+	for (n2_len = 0; *(n2 + n2_len); n2_len++)
+		;
+	if (++n1_len > size_r || ++n2_len > size_r)
+		return (0);
+	if (n1_len > n2_len)
+		max = n1_len;
+	else
+		max = n2_len;
+	n1_len -= max;
+	n2_len -= max;
+	for (i = 0; i < max - 1; i++)
 	{
-		printf("%08x: ", byte);
-
-		for (i = 0; i < 10; i++)
+		if (n1_len >= 0)
+			*(r + i) = *(n1 + n1_len);
+		*(r + i + 1) = '\0';
+		if (n2_len >= 0)
 		{
-			if ((i + byte) >= size)
-				printf("  ");
-			else
-				printf("%02x", b[i + byte]);
-			if ((i % 2) != 0 && i != 0)
-				printf(" ");
+			flag = addi(n2, r, size_r, i, n2_len, max);
+			if (flag == 0)
+				return (0);
+			if (flag < 0)
+			{
+				i++;
+				max++;
+			}
 		}
-
-		for (i = 0; i < 10; i++)
-		{
-			if ((i + byte) >= size)
-				break;
-			else if (b[i + byte] >= 31 && b[i + byte] <= 126)
-				printf("%c", b[i + byte]);
-			else
-				printf(".");
-		}
-
-		if (byte >= size)
-			continue;
-		printf("\n");
+		n1_len++;
+		n2_len++;
 	}
+	return (r);
+}
 
-	if (size >= 0)
-		printf("\n");
+/**
+ * addi - adds the second string if applicable
+ *
+ * @n2: second string to add
+ * @r: buffer to store addition
+ * @size_r: size of buffer
+ * @i: iteration of loop that function is inside
+ * @n2_len: length of n2 string
+ * @max: max length of strings
+ * Return: 0 if string size becomes too big, -1 if buffer size ++, 1 otherwise
+ */
+int addi(char *n2, char *r, int size_r, int i, int n2_len, int max)
+{
+	int n, temp;
+
+	n = i;
+
+	*(r + i) += *(n2 + n2_len) - '0';
+	while (*(r + n) > '9')
+	{
+		*(r + n) -= 10;
+		if (n > 0)
+		{
+			n--;
+			*(r + n) += 1;
+		}
+		else
+		{
+			if (max + 1 > size_r)
+				return (0);
+			*(r + max) = '\0';
+			temp = *(r);
+			*(r) = '1';
+			for (n = 1; n <= i + 1; n++)
+			{
+				*(r + n) = temp;
+				if (*(r + n + 1) != '\0')
+					temp = *(r + n + 1);
+			}
+			*(r + max) = '\0';
+			return (-1);
+		}
+	}
+	return (1);
 }
