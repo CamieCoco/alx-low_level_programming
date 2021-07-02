@@ -1,32 +1,27 @@
-#include <stdio.h>
 #include "holberton.h"
 
 /**
- * print_number - prints an integer
- *
- * @n: int to print
- * Return: void
+ * rot13 - rotate characters 13 places in the alphabet
+ * @s: string
+ * Return: string `s` rotated
  */
-void print_number(int n)
-{
-	unsigned int num;
-	unsigned int div = 1;
 
-	if (n < 0)
+char *rot13(char *s)
+{
+	char a[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+	char rot[] = "NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm";
+	int j, i;
+
+	for (i = 0; *(s + i) != '\0'; i++)
 	{
-		_putchar('-');
-		num = -1 * n;
+		for (j = 0; j <= 51; j++)
+		{
+			if (*(s + i) == a[j])
+			{
+				*(s + i) = rot[j];
+				break;
+			}
+		}
 	}
-	else
-	{
-		num = n;
-	}
-	while (num / div > 9)
-		div *= 10;
-	while (div > 9)
-	{
-		_putchar((num / div) % 10 + '0');
-		div = div / 10;
-	}
-	_putchar(num % 10 + '0');
+	return (s);
 }
