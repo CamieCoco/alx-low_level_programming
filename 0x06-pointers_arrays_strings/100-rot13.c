@@ -1,24 +1,32 @@
+#include <stdio.h>
 #include "holberton.h"
 
 /**
- * print_number - function that prints an integer.
- * @n: number print
+ * print_number - prints an integer
+ *
+ * @n: int to print
+ * Return: void
  */
 void print_number(int n)
 {
-	unsigned int num = n;
-	/* If number is smaller than 0, put a - sign */
-	/* and change number to positive */
+	unsigned int num;
+	unsigned int div = 1;
+
 	if (n < 0)
 	{
 		_putchar('-');
-		num = -num;
+		num = -1 * n;
 	}
-
-	/* Remove the last digit and recur */
-	if (num / 10 != 0)
-		print_number(num / 10);
-
-	/* Print the last digit */
+	else
+	{
+		num = n;
+	}
+	while (num / div > 9)
+		div *= 10;
+	while (div > 9)
+	{
+		_putchar((num / div) % 10 + '0');
+		div = div / 10;
+	}
 	_putchar(num % 10 + '0');
 }
