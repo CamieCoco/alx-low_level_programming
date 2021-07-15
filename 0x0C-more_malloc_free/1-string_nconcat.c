@@ -1,57 +1,43 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include "holberton.h"
 
 /**
- * _strlen - Write a function that returns the length of a string.
- * @s: take an pointer
- * Return: the index of the array
- */
-int _strlen(char *s)
-{
-	int i;
-
-	for (i = 0; s[i] != '\0'; i++)
-		;
-	return (i);
-}
-
-/**
- * string_nconcat - function that concatenates two strings.
- * @s1: first string
- * @s2: second string
- * @n: bytes
- * Return: the string
+ * string_nconcat - that concatenates two stings
+ * @s1: pointer string
+ * @s2: pointer string
+ * @n: size
+ *
+ * Return: pointer
  */
 char *string_nconcat(char *s1, char *s2, unsigned int n)
 {
-	char *str;
-	unsigned int i, j, s1Len = 0, s2Len = 0;
+	char *ptr;
+	unsigned int i = 0, j = 0, a = 0, b = 0;
 
 	if (s1 == NULL)
 		s1 = "";
-	for (s1Len = 0; s1[s1Len] != '\0'; s1Len++)
-		;
 	if (s2 == NULL)
 		s2 = "";
-	for (s2Len = 0; s2[s2Len] != '\0'; s2Len++)
-		;
-
-	if (n >= s2Len)
-		;
-	else
-		s2Len = n;
-
-	str = malloc(s1Len * sizeof(char) + s2Len + 1);
-	if (str == NULL)
+	while (s1[i] != '\0')
+		i++;
+	while (s2[j] != '\0')
+		j++;
+	j++;
+	if (n >= j)
+		n = j;
+	ptr = malloc((i + n + 1) * sizeof(char));
+	if (ptr == NULL)
 		return (NULL);
-
-	for (i = 0; s1[i] != '\0'; i++)
-		str[i] = s1[i];
-
-	for (j = 0; s2[j] != '\0' && j < s2Len; j++, i++)
-		str[i] = s2[j];
-
-	str[i] = '\0';
-	return (str);
+	while (a < i)
+	{
+		ptr[a] = s1[a];
+		a++;
+	}
+	while (b < j && b < n)
+	{
+		ptr[a] = s2[b];
+		b++;
+		a++;
+	}
+	ptr[a] = '\0';
+	return (ptr);
 }
