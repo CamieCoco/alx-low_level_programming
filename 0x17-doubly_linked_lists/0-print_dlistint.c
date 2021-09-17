@@ -1,34 +1,30 @@
 #include "lists.h"
 
 /**
- * print_dlistint - Write a function that returns the
- * number of elements in a linked dlistint_t list
- * @h: Node
- * Return: the list
+ * print_dlistint - prints all the elements of a
+ * dlistint_t list
+ *
+ * @h: head of the list
+ * Return: the number of nodes
  */
 size_t print_dlistint(const dlistint_t *h)
 {
-  dlistint_t *tmp;
-  int i;
+  int count;
+
+  count = 0;
 
   if (h == NULL)
-    return (0);
-  printf("%d\n", h->n);
-  tmp = h->prev;
-  i = 1;
-  while (tmp != NULL)
+    return (count);
+
+  while (h->prev != NULL)
+    h = h->prev;
+
+  while (h != NULL)
     {
-      printf("%d\n", tmp->n);
-      tmp = tmp->prev;
-      i++;
-    }
-  tmp = h->next;
-  while (tmp != NULL)
-    {
-      printf("%d\n", tmp->n);
-      tmp = tmp->next;
-      i++;
+      printf("%d\n", h->n);
+      count++;
+      h = h->next;
     }
 
-  return (i);
+  return (count);
 }
