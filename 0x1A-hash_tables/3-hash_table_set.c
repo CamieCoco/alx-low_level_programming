@@ -1,69 +1,65 @@
 #include "hash_tables.h"
 
 /**
- * hash_table_set - function that adds an element to the hash table.
- * @ht: is the hash table you want to add or update the key/value to
- * @key: is the key.
- * @value: is the value associated with the key
+ * add_n_hash - adds a node at the beginning of a hash at a given index
  *
- * Return: 1 if it succeeded, 0 otherwise
+ * @head: head of the hash linked list
+ * @key: key of the hash
+ * @value: value to store
+ * Return: head of the hash
  */
-int hash_table_set(hash_table_t *ht, const char *key, const char *value)
+hash_node_t *add_n_hash(hash_node_t **head, const char *key, const char *value)
 {
-  hash_node_t *element;
+	hash_node_t *tmp;
 
-  if (ht == NULL)
-    return (0);
+	tmp = *head;
 
-  element = malloc(sizeof(hash_node_t));
-  if (element == NULL)
-    return (0);
+	while (tmp != NULL)
+	{
+		if (strcmp(key, tmp->key) == 0)
+		{
+			free(tmp->value);
+			tmp->value = strdup(value);
+			return (*head);
+		}
+		tmp = tmp->next;
+	}
 
-  element->key = strdup(key);
-  element->value = strdup(value);
-  insert_element_list(ht, element);
+	tmp = malloc(sizeof(hash_node_t));
 
-  return (1);
+	if (tmp == NULL)
+		return (NULL);
+
+	tmp->key = strdup(key);
+	tmp->value = strdup(value);
+	tmp->next = *head;
+	*head = tmp;
+
+	return (*head);
 }
 
 /**
- * insert_element_list - function inserts our elements in the list
- * @ht: is the hash table you want to add or update the key/value to
- * @element: insert an elemente into the given index of the array
+ * hash_table_set - adds a hash (key, value) to a given hash table
+ *
+ * @ht: pointer to the hash table
+ * @key: key of the hash
+ * @value: value to store
+ * Return: 1 if successes, 0 if fails
  */
-void insert_element_list(hash_table_t *ht, hash_node_t *element)
+int hash_table_set(hash_table_t *ht, const char *key, const char *value)
 {
-  unsigned long int index;
-  hash_node_t *tmp;
+	unsigned long int k_index;
 
-  index = key_index((unsigned char *)element->key, ht->size);
-  tmp = ht->array[index];
-  if (ht->array[index] != NULL)
-    {
-      tmp = ht->array[index];
-      while (tmp != NULL)
-	{
-	  if (strcmp(tmp->key, element->key) == 0)
-	    break;
-	  tmp = tmp->next;
-	}
-      if (tmp == NULL)
-	{
-	  element->next = ht->array[index];
-	  ht->array[index] = element;
-	}
-      else
-	{
-	  free(tmp->value);
-	  tmp->value = strdup(element->value);
-	  free(element->value);
-	  free(element->key);
-	  free(element);
-	}
-    }
-  else
-    {
-      element->next = NULL;
-      ht->array[index] = element;
-    }
+	if (ht == NULL)
+		return (0);
+
+	if (key == NULL || *key == '\0')
+		return (0);
+
+	k_index = key_index((unsigned char *)key, ht->size);
+
+	if (add_n_hash(&(ht->array[k_index]), key, value) == NULL)
+		return (0);
+
+	return (1);
 }
